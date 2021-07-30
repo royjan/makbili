@@ -744,17 +744,17 @@ void new_slave(char *seq1, char *seq2) {
 		
 	}
 
-	Scores tempMax ;
+	Scores tempMax;
 	//here find max in resolt arr
 	for (f = 0; f < batch; f++)
 	{
-		if (scores_each_t[f])>tempMax){
-			tempMax = scores_each_t[f]
+		if (scores_each_t[f].score>tempMax.score){
+			tempMax = scores_each_t[f];
 		}
 		printf("%1.3f|" , scores_each_t[f].score);
 	}
 	
-	printf("MPI%2d|Max offset %3d|with score %3d \n" ,my_rank,tempMax.offset,tempMax.score);
+	printf("MPI%2d|Max offset %3d|with score %1.3f \n" ,my_rank,tempMax.offset,tempMax.score);
 	exit(0);
 
 	
