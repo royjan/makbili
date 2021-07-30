@@ -765,13 +765,8 @@ void new_slave(char *seq1, char *seq2) {
 void checkOneCase(int my_rank, int batch, int x ,Scores *scores_each_t){
 	//compare -> save to shared memory => maximum
 	printf("MPI%2d|T%2d|Taskid %3d \n",my_rank, omp_get_thread_num(), x);
-<<<<<<< HEAD
 	scores_each_t[x%batch].score = x*3;
 	scores_each_t[x%batch].offset = x;
-	sleep(2);
-=======
-	scores_each_t[x] = x*3;
 	sleep(0.2);
->>>>>>> 9f2b59b608e6ffdb75ad32bac02608453310fc75
 } 
 
