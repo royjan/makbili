@@ -16,7 +16,7 @@
 int new_main(int argc, char *argv[]);
 void new_slave(char *seq1, char *seq2);
 void new_master(char **seq1, char **seq2, char **procedure);
-void checkOneCase(int my_rank, int x ,double *scores_each_t);
+void checkOneCase(int my_rank,int batch, int x ,Scores *scores_each_t);
 //
 
 
@@ -676,6 +676,7 @@ void new_slave(char *seq1, char *seq2) {
 	Weights weights;
 	Counts counts;
 
+
 	MPI_Datatype scoreMPIType;
 	createScoreType(&scoreMPIType);
 	MPI_Datatype weightMPIType;
@@ -715,8 +716,8 @@ void new_slave(char *seq1, char *seq2) {
 	int n_ot = 4;
 	omp_set_num_threads(n_ot);
 
-	double * scores_each_t;
-	scores_each_t = (double*) calloc(batch, sizeof(double));
+	Scores * scores_each_t;
+	scores_each_t = (Scores*) calloc(batch, sizeof(Scores));
 	int offset;
 
 		
@@ -735,7 +736,7 @@ void new_slave(char *seq1, char *seq2) {
 				#pragma omp task
 				{
 					checkOneCase(my_rank,batch, d,scores_each_t);
-					printf("%1.3f\n", scores_each_t[d%batch]);
+					printf("%1.3f\n", scores_each_t[d%batch].score);
 				}
 			}
 			
@@ -746,7 +747,7 @@ void new_slave(char *seq1, char *seq2) {
 	//here find max in resolt arr
 	for (f = 0; f < batch; f++)
 	{
-		printf("%1.3f|" , scores_each_t[f]);
+		printf("%1.3f|" , scores_each_t[f].score);
 	}
 	printf("OMP Worker num %d T num %d created task \n" ,my_rank, omp_get_thread_num());
 	exit(0);
@@ -756,10 +757,11 @@ void new_slave(char *seq1, char *seq2) {
 
 }
 
-void checkOneCase(int my_rank, int batch, int x ,double *scores_each_t){
+void checkOneCase(int my_rank, int batch, int x ,Scores *scores_each_t){
 	//compare -> save to shared memory => maximum
 	printf("MPI%2d|T%2d|Taskid %3d \n",my_rank, omp_get_thread_num(), x);
-	scores_each_t[x%25] = x*3;
-	sleep(0.2);
+	scores_each_t[x%batch].score = x*3;
+	scores_each_t[x%batch].offset = x;
+	sleep(2);
 } 
 
