@@ -12,15 +12,12 @@
 #define WEIGHT_BLOCK_LENGTH {1, 1, 1, 1}
 #define WEIGHT_NUM_ATTRIBUTES 4
 
-
-
 typedef struct {
 	double w1;
 	double w2;
 	double w3;
 	double w4;
 } Weights;
-
 
 typedef struct {
 	int countStars;
@@ -30,24 +27,29 @@ typedef struct {
 	double score;
 } Counts;
 
-
 typedef struct {
 	double score;
 	int offset;
+	int mute_loc;
+	int num_of_Seq;
 } Scores;
 
-
-int calculateOnGPU(char *seq1, char *seq2, Weights* weights, Scores *scores);
-void addMutantsEachSeq(char *seq2, int size_seq2, char **new_seq2, int *i, Scores **scores);
-void readFromFile(const char *file_path, Weights *weights, char **seq1, char **seq2,char **procedure);
-void writeToFile(FILE* file, Scores* scores, int numOfSeq2);
+int calculateOnGPU(char *seq1, char *seq2, Weights *weights, Scores *scores);
+void addMutantsEachSeq(char *seq2, int size_seq2, char **new_seq2, int *i,
+		Scores **scores);
+void readFromFile(const char *file_path, Weights *weights, char **seq1,
+		char **seq2, char **procedure, int *size_seq1, int *size_seq2);
+void writeToFile(FILE *file, Scores *scores, int numOfSeq2);
 int getSize1(char *s);
-double compareSameLenSequences(Weights weights, char *seq1, char *seq2, int size_seq2);
-void compareSequence(char *seq1, char *seq2, Counts *counts, Weights weights, Scores *scores);
+double compareSameLenSequences(Weights weights, char *seq1, char *seq2,
+		int size_seq2);
+void compareSequence(char *seq1, char *seq2, Counts *counts, Weights weights,
+		Scores *scores);
 void slave(char *one_seq, char *seq1);
-double compareDiffrentLenSequences(Weights weights, char *seq1, char *seq2, int size_seq2, Scores **scores);
+double compareDiffrentLenSequences(Weights weights, char *seq1, char *seq2,
+		int size_seq2, Scores **scores);
 void substring(char s[], char *sub, int p, int l);
 int calcMaxOffsetForEachSeq(char *seq1, char *seq2);
-int checkSemiOrSemiConservativeGroups1(char *c1, char *c2, const char *group[], int size);
-void master(char **seq1 ,char **seq2,char **procedure);
+int checkSemiOrSemiConservativeGroups1(char c1, char c2, const char *group[],
+		int size);
 

@@ -6,7 +6,7 @@ clean:
 	rm -f *.o ./mpiCudaOpemMP
 
 run:
-	mpiexec -np 3 ./mpiCudaOpemMP input.txt
+	mpiexec -np 2 ./mpiCudaOpemMP input.txt
 
 runOn2:
 	mpiexec -np 2 -machinefile  mf  -map-by  node  ./mpiCudaOpemMP input.txt
