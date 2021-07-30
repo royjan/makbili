@@ -743,12 +743,17 @@ void new_slave(char *seq1, char *seq2) {
 		
 	}
 
+	Scores tempMax ;
 	//here find max in resolt arr
 	for (f = 0; f < batch; f++)
 	{
+		if (scores_each_t[f])>tempMax){
+			tempMax = scores_each_t[f]
+		}
 		printf("%1.3f|" , scores_each_t[f]);
 	}
-	printf("OMP Worker num %d T num %d created task \n" ,my_rank, omp_get_thread_num());
+	
+	printf("MPI%2d|Max offset %3d|with score %3d \n" ,my_rank,tempMax.offset,tempMax.score);
 	exit(0);
 
 	
@@ -759,7 +764,7 @@ void new_slave(char *seq1, char *seq2) {
 void checkOneCase(int my_rank, int batch, int x ,double *scores_each_t){
 	//compare -> save to shared memory => maximum
 	printf("MPI%2d|T%2d|Taskid %3d \n",my_rank, omp_get_thread_num(), x);
-	scores_each_t[x%25] = x*3;
+	scores_each_t[x] = x*3;
 	sleep(0.2);
 } 
 

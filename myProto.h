@@ -33,9 +33,7 @@ typedef struct {
 
 typedef struct {
 	double score;
-	int mute_loc;
 	int offset;
-	int num_of_Seq;
 } Scores;
 
 
