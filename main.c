@@ -480,7 +480,7 @@ void new_slave(char *seq1, char *seq2) {
 	}
 
 	Scores tempMax;
-	tempMax.score = 0;
+	tempMax.score = -INFINITY;
 	tempMax.offset = -1;
 	//here find max in result arr
 	for (f = 0; f < batch; f++) {
