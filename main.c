@@ -480,7 +480,9 @@ void new_slave(char *seq1, char *seq2) {
 	}
 
 	Scores tempMax;
-	//here find max in resolt arr
+	tempMax.score = 0;
+	tempMax.offset = -1;
+	//here find max in result arr
 	for (f = 0; f < batch; f++) {
 		if (scores_each_t[f].score > tempMax.score) {
 			tempMax = scores_each_t[f];
