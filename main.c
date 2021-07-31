@@ -15,7 +15,7 @@ int new_main(int argc, char *argv[]);
 void new_slave(char *seq1, char *seq2);
 void new_master(char **seq1, char **seq2, char **procedure);
 void checkOneCase(int my_rank, int batch, int x, Scores *scores_each_t,
-		char *seq1, char *seq2, int size_seq2);
+		char *seq1, char *seq2, int size_seq2 ,Weights weights );
 //
 
 void createScoreType(MPI_Datatype *scoreMpiType);
@@ -233,7 +233,7 @@ double compareDiffrentLenSequences(Weights weights, char *seq1, char *seq2,
 }
 
 double compareSameLenSequencesNew(char *seq1, char *seq2, int size_seq2,
-		int offset) {
+		int offset, Weights weights) {
 	const char *cons_Groups[9] = { "NDEQ", "MILV", "FYM", "NEQK", "QHRK", "HY",
 			"STA", "NHQK", "MILF" };
 	const char *semi_Cons_Groups[11] = { "SAG", "SGND", "NEQHRK", "ATV", "STPA",
@@ -245,11 +245,9 @@ double compareSameLenSequencesNew(char *seq1, char *seq2, int size_seq2,
 	counts.countDots = 0;
 	counts.countColons = 0;
 	counts.countSpaces = 0;
-	Weights weights;
-	weights.w1 = 1;
-	weights.w2 = 1;
-	weights.w3 = 1;
-	weights.w4 = 1;
+	
+	//koko halastara
+
 	int current_offset = offset;
 	printf("\n\n");
 	for (i = 0; i < size_seq2; i++) {
@@ -486,7 +484,7 @@ void new_slave(char *seq1, char *seq2) {
 }
 
 void checkOneCase(int my_rank, int batch, int x, Scores *scores_each_t,
-		char *seq1, char *seq2, int size_seq2) {
+		char *seq1, char *seq2, int size_seq2 ,Weights weights ) {
 	double score = compareSameLenSequencesNew(seq1, seq2, size_seq2, x);
 	printf("SCORE: %1.3f\n", score);
 	scores_each_t[x % batch].score = score;
