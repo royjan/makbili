@@ -21,16 +21,6 @@ void checkOneCase(int my_rank, int batch, int x, Scores *scores_each_t,
 void createScoreType(MPI_Datatype *scoreMpiType);
 void createWeightType(MPI_Datatype *weightMpiType);
 
-int getSize1(char *s) {
-	char *t;
-	int size = 0;
-	for (t = s; *t != '\0'; t++) {
-		size++;
-	}
-
-	return size;
-}
-
 void readFromFile(const char *file_path, Weights *weights, char **seq1,
 		char **seq2, char **procedure, int *size_seq1, int *size_seq2) {
 	int i;
@@ -89,7 +79,7 @@ int checkSemiOrSemiConservativeGroups1(char c1, char c2, const char *group[],
 	for (i = 0; i < size; i++) {
 		found_c1 = '-';
 		found_c2 = '-';
-		size_g = getSize1((char*) group[i]);
+		size_g = strlen((char*) group[i]);
 
 		for (j = 0; j < size_g; j++) {
 			if (found_c1 == '-' && c1 == group[i][j]) {
@@ -111,8 +101,8 @@ int calcMaxOffsetForEachSeq(char *seq1, char *seq2) {
 	int size_seq1;
 	int size_seq2;
 	int maxOffsetEachSeq2;
-	size_seq1 = getSize1(seq1);
-	size_seq2 = getSize1(seq2);
+	size_seq1 = strlen(seq1);
+	size_seq2 = strlen(seq2);
 	maxOffsetEachSeq2 = abs(size_seq1 - size_seq2);
 	return maxOffsetEachSeq2;
 }

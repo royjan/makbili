@@ -40,7 +40,6 @@ void addMutantsEachSeq(char *seq2, int size_seq2, char **new_seq2, int *i,
 void readFromFile(const char *file_path, Weights *weights, char **seq1,
 		char **seq2, char **procedure, int *size_seq1, int *size_seq2);
 void writeToFile(FILE *file, Scores *scores, int numOfSeq2);
-int getSize1(char *s);
 double compareSameLenSequences(Weights weights, char *seq1, char *seq2,
 		int size_seq2);
 void compareSequence(char *seq1, char *seq2, Counts *counts, Weights weights,
